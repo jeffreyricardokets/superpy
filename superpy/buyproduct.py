@@ -11,7 +11,9 @@ class product:
         self.price = price
         self.expire_date = expire_date
         self.amount = amount
-        self.date = main.date.today()
+        date = tools.read_today_handler()
+        date = date[:date.find(' ')]
+        self.date = date
 
     def bought_product(self):
         buy_id = tools.make_id('buy')
