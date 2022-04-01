@@ -1,12 +1,6 @@
 # Imports
 import argparse
-from datetime import date
-from datetime import datetime
-import datetime
 from sys import argv
-import sys
-import os
-from pathlib import Path
 import buyproduct
 import tools
 import report
@@ -19,10 +13,10 @@ __human_name__ = "superpy"
 
 # Your code below this line.
 def main():
-    
-    tools.check_if_file_exist(tools.stock_file_path)
     tools.check_if_folder_exist()
+    tools.check_if_file_exist(tools.stock_file_path)
     tools.check_if_file_exist(tools.bought_file_path)
+    tools.check_if_file_exist(tools.sold_file_path)
     request_input_parser()
     pass
 
@@ -40,6 +34,7 @@ if __name__ == "__main__":
         parser_inventory.add_argument('--inventory')
         parser_inventory.add_argument('--sales')
         parser_inventory.add_argument('--orders')
+        parser_inventory.add_argument('--profit')
         parser_inventory.add_argument('--revenue')
 
         #create the parser for buy
@@ -72,6 +67,8 @@ if __name__ == "__main__":
                 report.show_inventory(tools.sold_file_path, args.sales)
             if args.orders:
                 report.show_inventory(tools.bought_file_path, args.orders)
+            if args.profit:
+                report.show_profit(args.profit)
             if args.revenue:
                 report.show_revenue(args.revenue)
             
@@ -94,8 +91,3 @@ if __name__ == "__main__":
 
 
     main()
-
-
-
-
-
