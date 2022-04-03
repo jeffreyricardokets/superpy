@@ -5,6 +5,9 @@ import buyproduct
 import tools
 import report
 import sales
+import export
+
+
 
 # Do not change these lines.
 __winc_id__ = "a2bc36ea784242e4989deb157d527ba0"
@@ -31,7 +34,7 @@ if __name__ == "__main__":
 
         #create the parser for report
         parser_inventory = subparser.add_parser('report', help='report_ help')
-        parser_inventory.add_argument('--inventory')
+        parser_inventory.add_argument('--inventory', action='store_true')
         parser_inventory.add_argument('--sales')
         parser_inventory.add_argument('--orders')
         parser_inventory.add_argument('--profit')
@@ -57,6 +60,14 @@ if __name__ == "__main__":
         #create the parser for clean_stock
         parser_cleanstock = subparser.add_parser('cleanstock', help='clean the stock')
 
+        #creat the parser for export
+        parser_export = subparser.add_parser('export', help='export')
+        parser_export.add_argument('--import-file', help='import file')
+        parser_export.add_argument('--export-file', help='export file')
+
+        #creat the parser to see the files in data
+        parser_file = subparser.add_parser('files', help='see the filenames in data')
+
         args = parser.parse_args()
         print(args)
 
@@ -71,6 +82,7 @@ if __name__ == "__main__":
                 report.show_profit(args.profit)
             if args.revenue:
                 report.show_revenue(args.revenue)
+
             
         if args.command == 'buy':
             buy_stock = buyproduct.product(args.product_name, args.price, args.expire_date, args.amount)
@@ -88,6 +100,13 @@ if __name__ == "__main__":
                 tools.write_today_handler(args.days)
             if args.weeks:
                 tools.write_today_handler(args.weeks)
+
+        if args.command == 'export':   
+            export.write_to_excel_file(args.import_file, args.export_file)
+        
+        if args.command == 'files':
+            export.file_list()
+
 
 
     main()
