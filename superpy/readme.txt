@@ -16,6 +16,15 @@ Als het excel bestand al bestaat krijgt u een foutmelding
 Mocht u graag willen weten welke csv bestanden in het programma staat kunt u de volgende command ingeven
 python3 main.py files
 
+Mocht u de geexporteerde data willen filteren op datum dan kunt u de command gebruiken
+python3 main.py export --import-file stock --export-file bla1 --start-date 2022-04-03 --end-date 2022-04-08
+Bij --start-date kunt u de begin datum invoeren
+en bij --end-date voert u de einddatum in
+
+U kunt ook de bestandformaat aanpassen naar xlsx of naar csv
+u kunt de argument --file-extension gebruiken een voorbeeld :
+python3 main.py export --import-file stock --export-file bla2 --start-date 2022-04-03 --end-date 2022-04-08 --file-extension csv
+
 4)report
 Als u een report van alle inventory wilt hebben dan kunt u deze command gebruiken
 python3 main.py report --inventory

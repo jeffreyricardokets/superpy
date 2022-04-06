@@ -64,6 +64,9 @@ if __name__ == "__main__":
         parser_export = subparser.add_parser('export', help='export')
         parser_export.add_argument('--import-file', help='import file')
         parser_export.add_argument('--export-file', help='export file')
+        parser_export.add_argument('--start-date', help='start date')
+        parser_export.add_argument('--end-date', help='end date')
+        parser_export.add_argument('--file-extension', help='select file extension')
 
         #creat the parser to see the files in data
         parser_file = subparser.add_parser('files', help='see the filenames in data')
@@ -101,8 +104,17 @@ if __name__ == "__main__":
             if args.weeks:
                 tools.write_today_handler(args.weeks)
 
-        if args.command == 'export':   
-            export.write_to_excel_file(args.import_file, args.export_file)
+        if args.command == 'export':
+            if args.start_date and args.end_date:
+                if(args.file_extension):
+                    export.write_to_excel_file(args.import_file, args.export_file, args.start_date, args.end_date, args.file_extension)
+                else:
+                    export.write_to_excel_file(args.import_file, args.export_file, args.start_date, args.end_date)
+            else:
+                if(args.file_extension):
+                    export.write_to_excel_file(args.import_file, args.export_file,0,0, args.file_extension)
+                else:
+                    export.write_to_excel_file(args.import_file, args.export_file)
         
         if args.command == 'files':
             export.file_list()

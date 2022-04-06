@@ -14,7 +14,7 @@ table = Table(show_header=True, header_style='bold #2070b2',
 def show_inventory(filepath, time_frame = tools.read_today_handler):
     i = 1
     my_dict = {}
-    converted_time_frame = tools.remove_space_from_date_str(convert_date_str_to_date(time_frame))
+    converted_time_frame = convert_date_str_to_date(time_frame)
 
     with open(filepath, newline='') as read_file:
         reader = csv.DictReader(read_file)
@@ -28,16 +28,18 @@ def show_inventory(filepath, time_frame = tools.read_today_handler):
         reader = csv.DictReader(read_file)
 
         for row in reader:
-            if filepath == tools.sold_file_path:
-                sell_bought_row = 'sell_date'
-            else:
-                sell_bought_row = 'bought_date'
+            if 'sell_date' in row:
+                column_name = 'sell_date'
+            elif 'bought_date' in row:
+                column_name = 'bought_date'
 
             if 'stock' in str(filepath) or time_frame == 'all':
                 my_dict[i] = row
                 i = i + 1
             else:
-                if row[sell_bought_row] == converted_time_frame:
+                print(row[column_name])
+                print(converted_time_frame)
+                if row[column_name] == converted_time_frame:
                     my_dict[i] = row
                     i = i + 1
 
