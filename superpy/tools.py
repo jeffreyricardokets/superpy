@@ -31,10 +31,19 @@ def check_if_file_exist(file_path):
                 csv_file.write(str(datetime.date.today()))
             else:
                 if file_path == bought_file_path or stock_file_path:
-                    writer = csv.DictWriter(csv_file, fieldnames=buyproduct.fieldnames)
+                    writer = csv.DictWriter(csv_file, fieldnames=buyproduct.field_names)
                 if file_path == sold_file_path:
                     writer = csv.DictWriter(csv_file, sales.field_names)
                 writer.writeheader()
+
+def validate_date(date_text):
+    try:
+        datetime.datetime.strptime(date_text, '%Y-%m-%d')
+        return True
+    except ValueError:
+        console.print('ERROR: Incorrect data form it should be YYYY-MM-DD', style='Bold red')
+        return False
+
 
 def make_id(action):
     if action == 'buy':
@@ -85,6 +94,7 @@ def write_today_handler(day_int = 0, week_int = 0):
     new_date = new_date[:new_date.find(" ")]
     with open(datetoday_file_path , mode='w') as writefile:
         writefile.write(str(new_date))
+        console.print(f'New date is {new_date}')
 
 def csv_to_dict(filename):
     my_dict = {}

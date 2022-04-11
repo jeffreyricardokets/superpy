@@ -1,4 +1,3 @@
-import imp
 import tools
 import buyproduct
 import csv
@@ -14,9 +13,6 @@ console = Console()
 field_names = ['ID', 'bought_id', 'sell_date', 'sell_price']
 
 def sell_product(product_name, price):
-    tools.check_if_file_exist(tools.sold_file_path)
-    tools.check_if_file_exist(tools.stock_file_path)
-    tools.clean_stock()
     stock_file = tools.csv_to_dict(tools.stock_file_path)
     product_in_stock = check_in_stock(stock_file,product_name)
     if product_in_stock:
@@ -52,7 +48,7 @@ def check_in_stock(stock_file, product_name):
     return False
 
 def product_to_sell(buyDict, product_name):
-    expir_date = datetime.datetime(9999,12,31).strftime("%Y %b %d")
+    expir_date = datetime.datetime(9999,12,31).strftime("%Y %m %d")
     best_product_to_sell = {}
     for row in buyDict.values():
         if row['product_name'] == product_name:

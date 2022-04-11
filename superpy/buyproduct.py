@@ -16,10 +16,11 @@ class product:
         self.expire_date = expire_date
         self.amount = amount
         self.date = tools.read_today_handler()
+        self.total_price =  int(price) *  int(amount)
 
     def bought_product(self):
         buy_id = str(tools.make_id('buy'))
-        buy_dict = {'ID' :  buy_id, 'product_name': self.product_name, 'amount' : self.amount, 'product_price' : self.price, 'bought_date': self.date ,'expire_date': self.expire_date }
+        buy_dict = {'ID' :  buy_id, 'product_name': self.product_name, 'amount' : self.amount, 'product_price' : str(self.total_price), 'bought_date': self.date ,'expire_date': self.expire_date }
         with open(tools.bought_file_path , mode="a") as csv_file:
             writer = csv.DictWriter(csv_file, fieldnames=field_names)
             writer.writerow(buy_dict)

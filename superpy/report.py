@@ -15,44 +15,42 @@ def show_inventory(filepath, time_frame = tools.read_today_handler):
     i = 1
     my_dict = {}
     converted_time_frame = convert_date_str_to_date(time_frame)
+    if tools.validate_date(converted_time_frame):
+        with open(filepath, newline='') as read_file:
+            reader = csv.DictReader(read_file)
 
-    with open(filepath, newline='') as read_file:
-        reader = csv.DictReader(read_file)
-
-        dict_from_csv = dict(list(reader)[0])
-        list_of_column_names = list(dict_from_csv.keys())
+            dict_from_csv = dict(list(reader)[0])
+            list_of_column_names = list(dict_from_csv.keys())
 
 
-    
-    with open(filepath, newline='') as read_file:
-        reader = csv.DictReader(read_file)
+        
+        with open(filepath, newline='') as read_file:
+            reader = csv.DictReader(read_file)
 
-        for row in reader:
-            if 'sell_date' in row:
-                column_name = 'sell_date'
-            elif 'bought_date' in row:
-                column_name = 'bought_date'
+            for row in reader:
+                if 'sell_date' in row:
+                    column_name = 'sell_date'
+                elif 'bought_date' in row:
+                    column_name = 'bought_date'
 
-            if 'stock' in str(filepath) or time_frame == 'all':
-                my_dict[i] = row
-                i = i + 1
-            else:
-                print(row[column_name])
-                print(converted_time_frame)
-                if row[column_name] == converted_time_frame:
+                if 'stock' in str(filepath) or time_frame == 'all':
                     my_dict[i] = row
                     i = i + 1
+                else:
+                    if row[column_name] == converted_time_frame:
+                        my_dict[i] = row
+                        i = i + 1
 
-    for column in list_of_column_names:
-        table.add_column(column, justify='right')
+        for column in list_of_column_names:
+            table.add_column(column, justify='right')
 
 
 
-    for input in my_dict.values():
-        a = ([key for key in input.values()])
-        table.add_row(*a)
+        for input in my_dict.values():
+            a = ([key for key in input.values()])
+            table.add_row(*a)
 
-    console.print(table)
+        console.print(table)
 
 def show_profit(input_date):
     output_date = convert_date_str_to_date(input_date)
@@ -128,11 +126,11 @@ def convert_str_to_date(input):
 def convert_date_str_to_date(input_date):
     input_today = datetime.datetime.strptime(tools.read_today_handler(), '%Y-%m-%d')
     if input_date == 'today':
-        return input_today
+        return tools.remove_space_from_date_str(input_today)
     elif input_date == 'tomorrow':
-        return input_today + datetime.timedelta(days = 1)
+        return tools.remove_space_from_date_str(input_today + datetime.timedelta(days = 1))
     elif input_date == 'yesterday':
-        return input_today + datetime.timedelta(days = -1)
+        return tools.remove_space_from_date_str(input_today + datetime.timedelta(days = -1))
     else:
         return input_date
 
