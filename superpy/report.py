@@ -16,7 +16,7 @@ def show_inventory(filepath, time_frame = tools.read_today_handler()):
     my_dict = {}
     converted_time_frame = convert_date_str_to_date(time_frame)
     if converted_time_frame != 'all':
-        if not tools.validate_date(time_frame):
+        if not tools.validate_date(converted_time_frame):
             return
     with open(filepath, newline='') as read_file:
         reader = csv.DictReader(read_file)
@@ -35,7 +35,8 @@ def show_inventory(filepath, time_frame = tools.read_today_handler()):
                 my_dict[i] = row
                 i = i + 1
             else:
-                if row[column_name] == converted_time_frame:
+                slice_column_name = row[column_name][:len(converted_time_frame)]
+                if slice_column_name == converted_time_frame:
                     my_dict[i] = row
                     i = i + 1
 
@@ -62,10 +63,10 @@ def show_revenue(input_date):
         output_date = convert_date_str_to_date(input_date)
         if input_date == 'today' or  input_date == 'tomorrow' or input_date == 'yesterday':
             output_date = tools.remove_space_from_date_str(output_date)
-            console.print(f'[bold green]Profit from date: {output_date} profit: {calcute_profit_writen(output_date)} [/bold green]')
+            console.print(f'[bold green]Revenue from date: {output_date} profit: {calcute_profit_writen(output_date)} [/bold green]')
         else:
             output_date = datetime.datetime.strptime(output_date, "%Y-%m")
-            console.print(f'[bold green]Profit from date: year {output_date.year} month {output_date.month} revenue: {calculate_revenue_date(output_date)} [/bold green]')
+            console.print(f'[bold green]Revenue from date: year {output_date.year} month {output_date.month} revenue: {calculate_revenue_date(output_date)} [/bold green]')
     except:
         console.print('Error please check the readme file', style='Bold red')
 

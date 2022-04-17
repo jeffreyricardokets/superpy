@@ -1,1 +1,3 @@
 ID,product_name,amount,product_price,bought_date,expire_date
+1,orange,5,10,2022-04-01,2022-05-03
+2,orange,5,10,2022-04-30,2022-05-03

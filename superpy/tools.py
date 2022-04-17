@@ -38,7 +38,10 @@ def check_if_file_exist(file_path):
 
 def validate_date(date_text):
     try:
-        datetime.datetime.strptime(date_text, '%Y-%m-%d')
+        if len(date_text) > 7:
+            datetime.datetime.strptime(date_text, '%Y-%m-%d')
+        else:
+            datetime.datetime.strptime(date_text, '%Y-%m')
         return True
     except ValueError:
         console.print('ERROR: Incorrect data form it should be YYYY-MM-DD', style='Bold red')

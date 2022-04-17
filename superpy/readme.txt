@@ -54,12 +54,12 @@ python3 main.py report --orders all
 Als u een report wilt hebben van de revenue dan kunt u de volgende command gebruiken
 python3 main.py report --revenue (zet hier in de datum welke gegevens u wilt inzien)
 Je kan de de volgende gegevens in de revenue argument invoeren
-today, tomorrow, yesterday of een datum als u een datum invoert dan moet u het doen in het volgende formaat jaar-
+today, tomorrow, yesterday of een datum als u een datum invoert dan moet u het doen in het volgende formaat jaar-maand
 
 Als u een report wilt hebben van de profit dan kunt u de volgende command gebruiken
 python3 main.py report --profit (zet hier in de datum welke gegevens u wilt inzien)
 Je kan de de volgende gegevens in de revenue argument invoeren
-today, tomorrow, yesterday of een datum als u een datum invoert dan moet u het doen in het volgende formaat jaar-
+today, tomorrow, yesterday of een datum als u een datum invoert dan moet u het doen in het volgende formaat jaar-maand
 
 
 5)om de datum van het programma aan te passen kunt u de volgende command gebruiken
