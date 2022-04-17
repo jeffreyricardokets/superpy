@@ -6,6 +6,7 @@ import tools
 import report
 import sales
 import export
+import datetime
 
 
 
@@ -73,7 +74,7 @@ if __name__ == "__main__":
 
         if args.command == 'report':
             if args.inventory:
-                report.show_inventory(tools.stock_file_path, args.inventory)
+                report.show_inventory(tools.stock_file_path)
             if args.sales:
                 report.show_inventory(tools.sold_file_path, args.sales)
             if args.orders:
@@ -86,11 +87,16 @@ if __name__ == "__main__":
             
         if args.command == 'buy':
             if tools.validate_date(args.expire_date):
-                if args.product_name and args.price and args.expire_date and args.amount:
-                    buy_stock = buyproduct.product(args.product_name, args.price, args.expire_date, args.amount)
-                    buy_stock.bought_product()
+                convert_expire_date = datetime.datetime.strptime(args.expire_date,'%Y-%m-%d')
+                today_date = datetime.datetime.strptime(tools.read_today_handler(), '%Y-%m-%d')
+                if convert_expire_date >= today_date:
+                    if args.product_name and args.price and args.expire_date and args.amount:
+                        buy_stock = buyproduct.product(args.product_name, args.price, args.expire_date, args.amount)
+                        buy_stock.bought_product()
+                    else:
+                        print('Error: not all data is filled in')
                 else:
-                    print('Error: not all data is filled in')
+                    print('Error pick a expire date that is today or in the future')
 
         if args.command == 'sell':
             if args.product_name and args.price:

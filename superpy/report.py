@@ -11,40 +11,36 @@ table = Table(show_header=True, header_style='bold #2070b2',
               title='Report')
 
 
-def show_inventory(filepath, time_frame = tools.read_today_handler):
+def show_inventory(filepath, time_frame = tools.read_today_handler()):
     i = 1
     my_dict = {}
     converted_time_frame = convert_date_str_to_date(time_frame)
-    if tools.validate_date(converted_time_frame):
-        with open(filepath, newline='') as read_file:
-            reader = csv.DictReader(read_file)
+    if converted_time_frame != 'all':
+        if not tools.validate_date(time_frame):
+            return
+    with open(filepath, newline='') as read_file:
+        reader = csv.DictReader(read_file)
+        list_of_column_names = reader.fieldnames
+    
+    with open(filepath, newline='') as read_file:
+        reader = csv.DictReader(read_file)
 
-            dict_from_csv = dict(list(reader)[0])
-            list_of_column_names = list(dict_from_csv.keys())
+        for row in reader:
+            if 'sell_date' in row:
+                column_name = 'sell_date'
+            elif 'bought_date' in row:
+                column_name = 'bought_date'
 
-
-        
-        with open(filepath, newline='') as read_file:
-            reader = csv.DictReader(read_file)
-
-            for row in reader:
-                if 'sell_date' in row:
-                    column_name = 'sell_date'
-                elif 'bought_date' in row:
-                    column_name = 'bought_date'
-
-                if 'stock' in str(filepath) or time_frame == 'all':
+            if 'stock' in str(filepath) or time_frame == 'all':
+                my_dict[i] = row
+                i = i + 1
+            else:
+                if row[column_name] == converted_time_frame:
                     my_dict[i] = row
                     i = i + 1
-                else:
-                    if row[column_name] == converted_time_frame:
-                        my_dict[i] = row
-                        i = i + 1
 
         for column in list_of_column_names:
             table.add_column(column, justify='right')
-
-
 
         for input in my_dict.values():
             a = ([key for key in input.values()])

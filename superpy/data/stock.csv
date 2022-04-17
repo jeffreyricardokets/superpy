@@ -1,2 +1,5 @@
 ID,product_name,amount,product_price,bought_date,expire_date
-88,apple,3,5,2022-04-03,2022-10-15
+105,orange,3,10,2022-04-17,2022-04-17
+106,orange,5,10,2022-04-17,2022-04-17
+107,orange,5,10,2022-04-17,2022-04-17
+108,orange,5,10,2022-04-17,2022-04-17
